@@ -30,7 +30,7 @@ public class Student1_Crud {
     static int studentId;
 
     @Test
-    public void getAllStudent(){
+    public void test1_GetAllStudent(){
         given()
                 .when()
                 .get("/list")
@@ -38,7 +38,7 @@ public class Student1_Crud {
                 .statusCode(200);
     }
     @Test
-    public void getStudentByID(){
+    public void test2_GetStudentByID(){
         Response response = given()
                 .pathParam("id", "7")
                 .when()
@@ -47,7 +47,7 @@ public class Student1_Crud {
     }
 
     @Test
-    public void createNewStudent(){
+    public void test3_CreateNewStudent(){
 
         List<String>courseList = new ArrayList<>();
         courseList.add("Accounting");
@@ -69,7 +69,7 @@ public class Student1_Crud {
     }
 
     @Test
-    public void extractStudentDataByID(){
+    public void test4_ExtractStudentDataByID(){
         HashMap<String,?> studentData = given()
                 .when()
                 .get("/list")
@@ -82,7 +82,7 @@ public class Student1_Crud {
     }
 
     @Test
-    public void extractStudentDataByHalfName(){
+    public void test5_ExtractStudentDataByHalfName(){
         List<String> studentData = given()
                 .when()
                 .get("/list")
@@ -93,28 +93,31 @@ public class Student1_Crud {
     }
 
     @Test
-    public void updateStudentData(){
+    public void test6_UpdateStudentData(){
 
-        List<String> courseList = new ArrayList<>();
+        List<String>courseList = new ArrayList<>();
         courseList.add("Accounting");
-        courseList.add("Business");
-        courseList.add("ICT");
+        courseList.add("Statistics");
 
         StudentPojo studentPojo = new StudentPojo();
+        studentPojo.setFirstName(firstName);
+        studentPojo.setLastName(lastName);
+        studentPojo.setEmail(email);
+        studentPojo.setProgramme("Business Analyst");
         studentPojo.setCourses(courseList);
 
         Response response = given()
                 .log().all()
                 .header("Content-Type", "application/json")
-                .pathParam("id", studentId)
+                .pathParam("id",studentId)
                 .when()
                 .body(studentPojo)
-                .patch("{/id}");
+                .patch("/{id}");
         response.then().statusCode(200);
     }
 
     @Test
-    public void deleteStudent(){
+    public void test7_DeleteStudent(){
         Response response = given()
                 .pathParam("id",studentId)
                 .when()
@@ -123,7 +126,7 @@ public class Student1_Crud {
     }
 
     @Test
-    public void confirmDelete(){
+    public void test8_ConfirmDelete(){
 
         Response response=given()
                 .log().all()
