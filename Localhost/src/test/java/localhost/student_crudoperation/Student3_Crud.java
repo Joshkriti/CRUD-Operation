@@ -33,7 +33,7 @@ public class Student3_Crud {
     public void test001_GetAllStudent(){
         given()
                 .when()
-                .get()
+                .get("/list")
                 .then().statusCode(200);
     }
 
@@ -89,5 +89,25 @@ public class Student3_Crud {
                 .statusCode(200)
                 .extract().path("findAll{it.lastName.endsWith('te')}");
         System.out.println(name);
+    }
+
+    @Test
+    public void test006_DeleteStudent(){
+
+        Response response = given()
+                .pathParam("id",studentID)
+                .when()
+                .delete("/{id}");
+        response.then().statusCode(204);
+    }
+
+    @Test
+    public void test007_ConfirmDeleteStudent(){
+
+        Response response = given()
+                .pathParam("id", studentID)
+                .when()
+                .get("/{id}");
+        response.then().statusCode(404);
     }
 }

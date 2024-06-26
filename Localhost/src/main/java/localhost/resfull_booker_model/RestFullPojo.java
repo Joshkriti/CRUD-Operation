@@ -3,12 +3,10 @@ package localhost.resfull_booker_model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 public class RestFullPojo {
         @JsonInclude(JsonInclude.Include.NON_NULL)
-        @JsonProperty("checkin")
-        private String checkin;
-        @JsonProperty("checkout")
-        private String checkout;
         @JsonProperty("firstname")
         private String firstname;
         @JsonProperty("lastname")
@@ -18,58 +16,62 @@ public class RestFullPojo {
         @JsonProperty("depositpaid")
         private Boolean depositpaid;
         @JsonProperty("bookingdates")
-        private Bookingdates bookingdates;
+        private String bookingdates;
+        @JsonProperty("checkin")
+        private String checkin;
+        @JsonProperty("checkout")
+        private String checkout;
         @JsonProperty("additionalneeds")
         private String additionalneeds;
 
         @JsonProperty("firstname")
         public String getFirstname() {
-            return firstname;
+                return firstname;
         }
 
         @JsonProperty("firstname")
         public void setFirstname(String firstname) {
-            this.firstname = firstname;
+                this.firstname = firstname;
         }
 
         @JsonProperty("lastname")
         public String getLastname() {
-            return lastname;
+                return lastname;
         }
 
         @JsonProperty("lastname")
         public void setLastname(String lastname) {
-            this.lastname = lastname;
+                this.lastname = lastname;
         }
 
         @JsonProperty("totalprice")
         public Integer getTotalprice() {
-            return totalprice;
+                return totalprice;
         }
 
         @JsonProperty("totalprice")
         public void setTotalprice(Integer totalprice) {
-            this.totalprice = totalprice;
+                this.totalprice = totalprice;
         }
 
         @JsonProperty("depositpaid")
         public Boolean getDepositpaid() {
-            return depositpaid;
+                return depositpaid;
         }
 
         @JsonProperty("depositpaid")
         public void setDepositpaid(Boolean depositpaid) {
-            this.depositpaid = depositpaid;
+                this.depositpaid = depositpaid;
         }
 
         @JsonProperty("bookingdates")
-        public Bookingdates getBookingdates() {
-            return bookingdates;
+        public String getBookingdates() {
+                return bookingdates;
         }
 
         @JsonProperty("bookingdates")
-        public void setBookingdates(Bookingdates bookingdates) {
-            this.bookingdates = bookingdates;
+        public void setBookingdates(List<String> bookingdates) {
+                this.bookingdates = String.valueOf(bookingdates);
         }
         @JsonProperty("checkin")
         public String getCheckin() {
@@ -93,13 +95,14 @@ public class RestFullPojo {
 
         @JsonProperty("additionalneeds")
         public String getAdditionalneeds() {
-            return additionalneeds;
+                return additionalneeds;
         }
 
         @JsonProperty("additionalneeds")
         public void setAdditionalneeds(String additionalneeds) {
-            this.additionalneeds = additionalneeds;
+                this.additionalneeds = additionalneeds;
         }
 
-
 }
+
+

@@ -7,6 +7,9 @@ import localhost.resfull_booker_model.RestFullPojo;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static io.restassured.RestAssured.given;
 
 public class RestFullBooker_Crud {
@@ -15,9 +18,8 @@ public class RestFullBooker_Crud {
     String lastName = "Kanji";
     int totalPrice = 111;
     Boolean depositPaid = true;
-    String bookingDate = "";
     String checkIn = "2018-01-01";
-    String checkOut = "2018-01-01";
+    String checkOut = "2018-01-01" + "}";
     String additionalNeeds = "Breakfast";
 
     @BeforeTest
@@ -26,7 +28,7 @@ public class RestFullBooker_Crud {
         RestAssured.basePath = "/booking";
     }
 
-    @Test
+    @Test (priority = 1)
     public void getAllBooking(){
         given()
                 .when()
@@ -35,7 +37,7 @@ public class RestFullBooker_Crud {
                 .statusCode(200);
     }
 
-    @Test
+    @Test (priority = 2)
     public void getBookingByID(){
         Response response = given()
                 .pathParam("id",1880)
@@ -44,28 +46,28 @@ public class RestFullBooker_Crud {
         response.then().statusCode(200);
     }
 
-    @Test
+    @Test (priority = 3)
     public void createNewBooking(){
+
+        List<String > checkInAndOut = new ArrayList<>();
+        checkInAndOut.add("2018-01-01");
+        checkInAndOut.add("2019-01-01");
 
         RestFullPojo restFullPojo = new RestFullPojo();
         restFullPojo.setFirstname(firstName);
         restFullPojo.setLastname(lastName);
         restFullPojo.setTotalprice(totalPrice);
         restFullPojo.setDepositpaid(depositPaid);
-        //restFullPojo.setBookingdates();
-        restFullPojo.setCheckin(checkIn);
-        restFullPojo.setCheckout(checkOut);
+        restFullPojo.setBookingdates(checkInAndOut);
         restFullPojo.setAdditionalneeds(additionalNeeds);
-        System.out.println(restFullPojo);
 
-        Response response = given().log().all()
+       Response response = given().log().all()
                 .when()
                 .contentType(ContentType.JSON)
                 .body(restFullPojo)
                 .post();
         response.then().statusCode(201);
-       // int idNumber = response.then().extract().path("id");
-
-
     }
+
+
 }
