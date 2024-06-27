@@ -19,7 +19,7 @@ public class Product1_Crud extends TestBase {
     String model = "C";
     String url = "https://www.casio.co.uk/watches-clocks";
     String img = "https://images.app.goo.gl/bHAV1WMTR2zpCZQM7";
-    int idNumber;
+    int productId;
 
     @Test(priority = 1)
     public void getAllProduct() {
@@ -36,7 +36,6 @@ public class Product1_Crud extends TestBase {
                 .when()
                 .get("/{id}");
         response.then().log().all().statusCode(200);
-
     }
 
     @Test (priority = 3)
@@ -55,14 +54,65 @@ public class Product1_Crud extends TestBase {
         productPojo.setUrl(url);
         productPojo.setImage(img);
 
-        Response response = given()
+        ProductPojo productPojo1 = given()
                 .log().all()
                 .header("Content-Type", "application/json")
                 .when()
                 .body(productPojo)
-                .post();
-        response.then().log().all().statusCode(201);
+                .post()
+                .getBody()
+                .as(ProductPojo.class);
+
+        System.out.println(productPojo1.getId());
+        productId = productPojo1.getId();
     }
+
+
+
+    @Test (priority = 4)
+    public void updateProductDetails(){
+        ProductPojo productPojo = new ProductPojo();
+
+        productPojo.setName(name);
+        productPojo.setType(type);
+        productPojo.setPrice(30.00F);
+        productPojo.setShipping(4);
+        productPojo.setUpc(upc);
+        productPojo.setDescription(description);
+        productPojo.setManufacturer(manufactures);
+        productPojo.setModel(model);
+        productPojo.setUrl(url);
+        productPojo.setImage(img);
+
+        Response response=given()
+                .log().all()
+                .header("Content-Type", "application/json")
+                .pathParam("id", productId)
+                .when()
+                .body(productPojo)
+                .patch("/{id}");
+        response.then().statusCode(200);
+    }
+
+    @Test (priority = 5)
+    public void deleteProduct(){
+        Response response = given()
+                .pathParam("id",productId)
+                .when()
+                .delete("/{id}");
+        response.then().statusCode(200);
+    }
+
+    @Test (priority = 6)
+    public void confirmDelete(){
+        Response response = given()
+                .pathParam("id", productId)
+                .when()
+                .get("/{id}");
+        response.then().statusCode(404);
+    }
+
+
 
 
 }

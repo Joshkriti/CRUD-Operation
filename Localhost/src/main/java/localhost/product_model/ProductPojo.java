@@ -3,9 +3,10 @@ package localhost.product_model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ProductPojo {
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ProductPojo {
     @JsonProperty("id")
     private Integer id;
     @JsonProperty("name")
@@ -28,6 +29,13 @@ public class ProductPojo {
     private String url;
     @JsonProperty("image")
     private String image;
+    @JsonProperty("createdAt")
+    private String createdAt;
+    @JsonProperty("updatedAt")
+    private String updatedAt;
+    @JsonProperty("categories")
+    private List<Category> categories;
+
     @JsonProperty("id")
     public Integer getId() {
         return id;
@@ -138,5 +146,33 @@ public class ProductPojo {
         this.image = image;
     }
 
-}
+    @JsonProperty("createdAt")
+    public String getCreatedAt() {
+        return createdAt;
+    }
 
+    @JsonProperty("createdAt")
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @JsonProperty("updatedAt")
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    @JsonProperty("updatedAt")
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    @JsonProperty("categories")
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    @JsonProperty("categories")
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+}
